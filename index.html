@@ -567,6 +567,118 @@
       font-size: 0.6rem; color: #22c55e;
     }
 
+    /* ─── Project Modal ─────────────────────────────────────── */
+    .modal-overlay {
+      position: fixed; inset: 0; z-index: 2000;
+      background: rgba(5,8,16,0.88);
+      backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+      display: flex; align-items: center; justify-content: center;
+      padding: 24px;
+      opacity: 0; pointer-events: none;
+      transition: opacity 0.3s ease;
+    }
+    .modal-overlay.open { opacity: 1; pointer-events: auto; }
+
+    .modal {
+      background: var(--bg-card); border: 1px solid var(--border-light);
+      border-radius: var(--radius-xl);
+      width: 100%; max-width: 760px; max-height: 88vh;
+      overflow-y: auto; position: relative;
+      box-shadow: 0 24px 80px rgba(0,0,0,0.7), 0 0 0 1px rgba(59,130,246,0.1);
+      transform: translateY(24px) scale(0.97);
+      transition: transform 0.35s cubic-bezier(0.4,0,0.2,1), opacity 0.3s ease;
+      opacity: 0;
+    }
+    .modal-overlay.open .modal { transform: none; opacity: 1; }
+
+    .modal-top {
+      position: sticky; top: 0; z-index: 1;
+      background: var(--bg-card);
+      border-bottom: 1px solid var(--border);
+      padding: 20px 28px;
+      display: flex; align-items: center; gap: 8px;
+    }
+    .modal-top-dot { width: 10px; height: 10px; border-radius: 50%; }
+    .modal-close {
+      margin-left: auto; background: none; border: none;
+      color: var(--text-muted); cursor: pointer; font-size: 1.4rem;
+      width: 32px; height: 32px; border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      transition: var(--transition); line-height: 1;
+    }
+    .modal-close:hover { background: rgba(239,68,68,0.15); color: #f87171; }
+
+    .modal-banner {
+      height: 160px; display: flex; align-items: center; justify-content: center;
+      font-size: 4rem; position: relative; overflow: hidden;
+    }
+    .modal-banner-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(to bottom, transparent 30%, var(--bg-card));
+    }
+
+    .modal-body { padding: 0 32px 32px; }
+
+    .modal-meta {
+      display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 20px;
+    }
+
+    .modal-title {
+      font-size: 1.6rem; font-weight: 900;
+      letter-spacing: -0.03em; margin-bottom: 6px;
+    }
+    .modal-subtitle {
+      font-size: 0.875rem; color: var(--accent-bright);
+      font-family: var(--font-mono); font-weight: 600; margin-bottom: 24px;
+    }
+
+    .modal-section { margin-bottom: 24px; }
+    .modal-section-label {
+      display: flex; align-items: center; gap: 8px;
+      font-size: 0.72rem; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.1em; color: var(--text-muted);
+      margin-bottom: 10px;
+    }
+    .modal-section-label::after {
+      content: ''; flex: 1; height: 1px; background: var(--border);
+    }
+    .modal-section p {
+      font-size: 0.9rem; color: var(--text-secondary); line-height: 1.75;
+    }
+
+    .modal-list { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+    .modal-list li {
+      display: flex; align-items: flex-start; gap: 10px;
+      font-size: 0.875rem; color: var(--text-secondary); line-height: 1.5;
+    }
+    .modal-list li::before {
+      content: '▹'; color: var(--accent-bright); flex-shrink: 0;
+      margin-top: 1px; font-size: 0.8rem;
+    }
+
+    .modal-outcome-grid {
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 12px;
+    }
+    .modal-outcome-card {
+      background: var(--bg-secondary); border: 1px solid var(--border);
+      border-radius: var(--radius-md); padding: 14px 16px; text-align: center;
+    }
+    .modal-outcome-val {
+      font-size: 1.5rem; font-weight: 900;
+      background: var(--gradient-accent);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      background-clip: text; display: block; margin-bottom: 4px;
+    }
+    .modal-outcome-lbl { font-size: 0.75rem; color: var(--text-muted); font-weight: 500; }
+
+    .modal-tech-row { display: flex; flex-wrap: wrap; gap: 8px; }
+    .modal-tech-tag {
+      background: var(--accent-glow); border: 1px solid rgba(59,130,246,0.25);
+      color: var(--accent-bright); font-size: 0.78rem; font-weight: 600;
+      padding: 5px 12px; border-radius: var(--radius-sm);
+      font-family: var(--font-mono); letter-spacing: 0.02em;
+    }
+
     /* ─── Projects ───────────────────────────────────────────── */
     .projects-grid {
       display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 28px;
@@ -1350,13 +1462,13 @@
           </div>
           <div class="project-actions">
             <a href="#contact" class="project-link">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
-              Request Demo
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+              Contact
             </a>
-            <a href="#contact" class="project-link">
+            <button class="project-link" onclick="openModal('modal-sbi')" style="background:none;cursor:pointer;font-family:inherit;">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
-              Details
-            </a>
+              View Details
+            </button>
           </div>
         </div>
       </div>
@@ -1383,10 +1495,10 @@
             <span class="tech-tag">Query Opt.</span>
           </div>
           <div class="project-actions">
-            <a href="#contact" class="project-link">
+            <button class="project-link" onclick="openModal('modal-iot')" style="background:none;cursor:pointer;font-family:inherit;">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
-              Details
-            </a>
+              View Details
+            </button>
           </div>
         </div>
       </div>
@@ -1413,10 +1525,10 @@
             <span class="tech-tag">Analytics</span>
           </div>
           <div class="project-actions">
-            <a href="#contact" class="project-link">
+            <button class="project-link" onclick="openModal('modal-crm')" style="background:none;cursor:pointer;font-family:inherit;">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
-              Details
-            </a>
+              View Details
+            </button>
           </div>
         </div>
       </div>
@@ -1445,10 +1557,10 @@
             <span class="tech-tag">Automation</span>
           </div>
           <div class="project-actions">
-            <a href="#contact" class="project-link">
+            <button class="project-link" onclick="openModal('modal-ai-call')" style="background:none;cursor:pointer;font-family:inherit;">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
-              Details
-            </a>
+              View Details
+            </button>
           </div>
         </div>
       </div>
@@ -1475,10 +1587,10 @@
             <span class="tech-tag">Validation</span>
           </div>
           <div class="project-actions">
-            <a href="#contact" class="project-link">
+            <button class="project-link" onclick="openModal('modal-security')" style="background:none;cursor:pointer;font-family:inherit;">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
-              Details
-            </a>
+              View Details
+            </button>
           </div>
         </div>
       </div>
@@ -1811,6 +1923,375 @@
   </div>
 </footer>
 
+<!-- ═══════════════════════════ PROJECT MODALS ══════════════════════ -->
+
+<!-- Modal: SBI Sewa Portal -->
+<div class="modal-overlay" id="modal-sbi" role="dialog" aria-modal="true" aria-label="SBI Sewa Portal details">
+  <div class="modal">
+    <div class="modal-top">
+      <div class="modal-top-dot" style="background:#ff5f57"></div>
+      <div class="modal-top-dot" style="background:#ffbd2e"></div>
+      <div class="modal-top-dot" style="background:#28c840"></div>
+      <button class="modal-close" onclick="closeModal('modal-sbi')" aria-label="Close">✕</button>
+    </div>
+    <div class="modal-banner" style="background:linear-gradient(135deg,#0f1a2e,#1a2d4a);">
+      🏦
+      <div class="modal-banner-overlay"></div>
+    </div>
+    <div class="modal-body">
+      <div class="modal-meta">
+        <span class="tag">Featured Project</span>
+        <span class="tag" style="background:rgba(34,197,94,0.1);border-color:rgba(34,197,94,0.3);color:#4ade80;">Production Live</span>
+      </div>
+      <div class="modal-title">SBI Sewa Portal</div>
+      <div class="modal-subtitle">Employee Service Platform · Laravel + MySQL + Firebase</div>
+
+      <div class="modal-section">
+        <div class="modal-section-label">The Problem</div>
+        <p>SBI's internal service booking process — canteen reservations, transport requests, meeting rooms, and facility management — was handled entirely through paper forms and phone calls. This caused constant double-bookings, zero real-time visibility into availability, and a heavy administrative burden on support staff tracking requests manually across departments.</p>
+      </div>
+
+      <div class="modal-section">
+        <div class="modal-section-label">My Role & Contribution</div>
+        <ul class="modal-list">
+          <li>Led backend architecture design — defined the entire API contract, database schema, and booking workflow state machine</li>
+          <li>Built 8+ RESTful API endpoints covering booking CRUD, real-time slot availability, and admin approval workflows</li>
+          <li>Implemented JWT-based authentication with role-based access control (Employee, Manager, Admin) using Laravel Sanctum</li>
+          <li>Integrated Firebase Cloud Messaging (FCM) for real-time push notifications on booking status changes</li>
+          <li>Designed the slot-availability algorithm to prevent double-booking under concurrent request conditions</li>
+          <li>Built scheduled Laravel jobs to auto-expire pending bookings and release slots</li>
+        </ul>
+      </div>
+
+      <div class="modal-section">
+        <div class="modal-section-label">Key Technical Decisions</div>
+        <ul class="modal-list">
+          <li>Used Laravel queues (Redis-backed) for async notification dispatch — keeping API response times under 200ms</li>
+          <li>Database-level locking with <code style="color:var(--accent-bright);font-family:var(--font-mono);font-size:0.85em">SELECT FOR UPDATE</code> to handle concurrent slot reservations safely</li>
+          <li>Soft deletes on booking records for audit trail — a compliance requirement from the client</li>
+          <li>Separated admin and employee API groups behind middleware guards to enforce permission boundaries cleanly</li>
+        </ul>
+      </div>
+
+      <div class="modal-section">
+        <div class="modal-section-label">Outcome & Impact</div>
+        <div class="modal-outcome-grid">
+          <div class="modal-outcome-card"><span class="modal-outcome-val">60%</span><div class="modal-outcome-lbl">Reduction in manual booking effort</div></div>
+          <div class="modal-outcome-card"><span class="modal-outcome-val">0</span><div class="modal-outcome-lbl">Double-booking incidents post-launch</div></div>
+          <div class="modal-outcome-card"><span class="modal-outcome-val">500+</span><div class="modal-outcome-lbl">Daily active users in production</div></div>
+          <div class="modal-outcome-card"><span class="modal-outcome-val">&lt;200ms</span><div class="modal-outcome-lbl">Average API response time</div></div>
+        </div>
+      </div>
+
+      <div class="modal-section">
+        <div class="modal-section-label">Tech Stack</div>
+        <div class="modal-tech-row">
+          <span class="modal-tech-tag">Laravel 10</span>
+          <span class="modal-tech-tag">PHP 8.1</span>
+          <span class="modal-tech-tag">MySQL</span>
+          <span class="modal-tech-tag">Firebase FCM</span>
+          <span class="modal-tech-tag">Laravel Sanctum</span>
+          <span class="modal-tech-tag">Redis Queues</span>
+          <span class="modal-tech-tag">REST API</span>
+          <span class="modal-tech-tag">RBAC</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal: IoT Data Logger -->
+<div class="modal-overlay" id="modal-iot" role="dialog" aria-modal="true" aria-label="IoT Data Logger details">
+  <div class="modal">
+    <div class="modal-top">
+      <div class="modal-top-dot" style="background:#ff5f57"></div>
+      <div class="modal-top-dot" style="background:#ffbd2e"></div>
+      <div class="modal-top-dot" style="background:#28c840"></div>
+      <button class="modal-close" onclick="closeModal('modal-iot')" aria-label="Close">✕</button>
+    </div>
+    <div class="modal-banner" style="background:linear-gradient(135deg,#0e1f1a,#1a3528);">
+      📡
+      <div class="modal-banner-overlay"></div>
+    </div>
+    <div class="modal-body">
+      <div class="modal-meta">
+        <span class="tag">IoT Backend</span>
+        <span class="tag" style="background:rgba(34,197,94,0.1);border-color:rgba(34,197,94,0.3);color:#4ade80;">Production Live</span>
+      </div>
+      <div class="modal-title">IoT Data Logger Platform</div>
+      <div class="modal-subtitle">High-Performance Data Ingestion · Laravel + MySQL</div>
+
+      <div class="modal-section">
+        <div class="modal-section-label">The Problem</div>
+        <p>The client operated 300+ IoT sensors across industrial sites sending data every few seconds. The existing system suffered from query timeouts, data loss under concurrent load, and dashboard lag of 15–30 seconds. The backend could not scale — adding new devices caused cascading slowdowns across the entire platform.</p>
+      </div>
+
+      <div class="modal-section">
+        <div class="modal-section-label">My Role & Contribution</div>
+        <ul class="modal-list">
+          <li>Re-architected the data ingestion pipeline from individual row inserts to batch inserts — reducing DB write load by 80%</li>
+          <li>Profiled all slow queries using MySQL EXPLAIN and added composite indexes on <code style="color:var(--accent-bright);font-family:var(--font-mono);font-size:0.85em">(device_id, recorded_at)</code> — the most common filter pattern</li>
+          <li>Built a paginated REST API for device data retrieval, replacing full-table scans with keyset pagination</li>
+          <li>Designed a partitioned table strategy by device group and date range for long-term data archival</li>
+          <li>Implemented a dashboard summary endpoint with pre-aggregated stats cached per device (5-min TTL)</li>
+        </ul>
+      </div>
+
+      <div class="modal-section">
+        <div class="modal-section-label">Key Technical Decisions</div>
+        <ul class="modal-list">
+          <li>Batch inserts over individual inserts: grouped incoming device payloads into 50-record chunks, reducing round trips from 300/s to 6/s</li>
+          <li>Composite indexing on high-cardinality filter columns eliminated full-table scans on the 10M+ row data log table</li>
+          <li>Used keyset pagination instead of OFFSET to keep retrieval O(log n) regardless of page depth</li>
+          <li>Separated hot (recent 24h) and cold (historical) data into different query paths to avoid index bloat</li>
+        </ul>
+      </div>
+
+      <div class="modal-section">
+        <div class="modal-section-label">Outcome & Impact</div>
+        <div class="modal-outcome-grid">
+          <div class="modal-outcome-card"><span class="modal-outcome-val">30%</span><div class="modal-outcome-lbl">Overall query performance gain</div></div>
+          <div class="modal-outcome-card"><span class="modal-outcome-val">300+</span><div class="modal-outcome-lbl">Concurrent devices — zero data loss</div></div>
+          <div class="modal-outcome-card"><span class="modal-outcome-val">80%</span><div class="modal-outcome-lbl">DB write load reduction</div></div>
+          <div class="modal-outcome-card"><span class="modal-outcome-val">0</span><div class="modal-outcome-lbl">Timeout incidents post-optimization</div></div>
+        </div>
+      </div>
+
+      <div class="modal-section">
+        <div class="modal-section-label">Tech Stack</div>
+        <div class="modal-tech-row">
+          <span class="modal-tech-tag">Laravel</span>
+          <span class="modal-tech-tag">PHP</span>
+          <span class="modal-tech-tag">MySQL</span>
+          <span class="modal-tech-tag">Composite Indexing</span>
+          <span class="modal-tech-tag">Batch Processing</span>
+          <span class="modal-tech-tag">Keyset Pagination</span>
+          <span class="modal-tech-tag">REST API</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal: Perfex CRM -->
+<div class="modal-overlay" id="modal-crm" role="dialog" aria-modal="true" aria-label="Perfex CRM details">
+  <div class="modal">
+    <div class="modal-top">
+      <div class="modal-top-dot" style="background:#ff5f57"></div>
+      <div class="modal-top-dot" style="background:#ffbd2e"></div>
+      <div class="modal-top-dot" style="background:#28c840"></div>
+      <button class="modal-close" onclick="closeModal('modal-crm')" aria-label="Close">✕</button>
+    </div>
+    <div class="modal-banner" style="background:linear-gradient(135deg,#1a1020,#2a1a35);">
+      📊
+      <div class="modal-banner-overlay"></div>
+    </div>
+    <div class="modal-body">
+      <div class="modal-meta">
+        <span class="tag">CRM Module</span>
+        <span class="tag" style="background:rgba(139,92,246,0.12);border-color:rgba(139,92,246,0.3);color:#c084fc;">Analytics</span>
+      </div>
+      <div class="modal-title">Perfex CRM Performance Module</div>
+      <div class="modal-subtitle">Role-Based Employee Performance Tracker · CodeIgniter + MySQL</div>
+
+      <div class="modal-section">
+        <div class="modal-section-label">The Problem</div>
+        <p>The company tracked employee performance entirely through spreadsheets — manually updated by managers, prone to errors, with no visibility for employees into their own scores. Generating a monthly performance report took 4–5 hours of manual work. There was no standardized formula, so scores differed between managers, creating fairness complaints.</p>
+      </div>
+
+      <div class="modal-section">
+        <div class="modal-section-label">My Role & Contribution</div>
+        <ul class="modal-list">
+          <li>Designed and built the entire module from scratch as a plugin integrated into the existing Perfex CRM codebase</li>
+          <li>Created a configurable points formula engine — admins define metric weights (attendance, tasks, client rating) via a UI; the engine computes scores dynamically</li>
+          <li>Built role-gated dashboards: employees see only their own data; managers see their team; admins see org-wide analytics</li>
+          <li>Implemented a denormalized <code style="color:var(--accent-bright);font-family:var(--font-mono);font-size:0.85em">performance_summary</code> table updated nightly, cutting report query time from 8s to under 1s</li>
+          <li>Added trend charts using Chart.js — monthly score progression per employee visible to both employee and manager</li>
+        </ul>
+      </div>
+
+      <div class="modal-section">
+        <div class="modal-section-label">Key Technical Decisions</div>
+        <ul class="modal-list">
+          <li>Denormalized summary table for analytics — write once nightly, read many times during the day. Trading slight data staleness for 8x faster reads</li>
+          <li>Formula stored as JSON config in DB, not hardcoded — allows HR to change weights without a deployment</li>
+          <li>Plugged into Perfex's existing auth and role system rather than building a separate one — reduced scope by 40%</li>
+        </ul>
+      </div>
+
+      <div class="modal-section">
+        <div class="modal-section-label">Outcome & Impact</div>
+        <div class="modal-outcome-grid">
+          <div class="modal-outcome-card"><span class="modal-outcome-val">60%</span><div class="modal-outcome-lbl">Faster report generation</div></div>
+          <div class="modal-outcome-card"><span class="modal-outcome-val">100%</span><div class="modal-outcome-lbl">Replaced manual spreadsheets</div></div>
+          <div class="modal-outcome-card"><span class="modal-outcome-val">&lt;1s</span><div class="modal-outcome-lbl">Report query time (was 8s)</div></div>
+          <div class="modal-outcome-card"><span class="modal-outcome-val">0</span><div class="modal-outcome-lbl">Fairness complaints post-launch</div></div>
+        </div>
+      </div>
+
+      <div class="modal-section">
+        <div class="modal-section-label">Tech Stack</div>
+        <div class="modal-tech-row">
+          <span class="modal-tech-tag">CodeIgniter</span>
+          <span class="modal-tech-tag">PHP</span>
+          <span class="modal-tech-tag">MySQL</span>
+          <span class="modal-tech-tag">RBAC</span>
+          <span class="modal-tech-tag">Chart.js</span>
+          <span class="modal-tech-tag">Cron Jobs</span>
+          <span class="modal-tech-tag">Denormalization</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal: AI Call Processing -->
+<div class="modal-overlay" id="modal-ai-call" role="dialog" aria-modal="true" aria-label="AI Call Processing System details">
+  <div class="modal">
+    <div class="modal-top">
+      <div class="modal-top-dot" style="background:#ff5f57"></div>
+      <div class="modal-top-dot" style="background:#ffbd2e"></div>
+      <div class="modal-top-dot" style="background:#28c840"></div>
+      <button class="modal-close" onclick="closeModal('modal-ai-call')" aria-label="Close">✕</button>
+    </div>
+    <div class="modal-banner" style="background:linear-gradient(135deg,#0a1020,#1a2540);">
+      🤖
+      <div class="modal-banner-overlay"></div>
+    </div>
+    <div class="modal-body">
+      <div class="modal-meta">
+        <span class="tag" style="background:rgba(139,92,246,0.15);border-color:rgba(139,92,246,0.3);color:#c084fc;">AI Powered</span>
+        <span class="tag" style="background:rgba(6,182,212,0.1);border-color:rgba(6,182,212,0.3);color:#22d3ee;">Automation</span>
+      </div>
+      <div class="modal-title">AI Call Processing System</div>
+      <div class="modal-subtitle">Call Summarization & Transcript Analysis · PHP + AI APIs + n8n</div>
+
+      <div class="modal-section">
+        <div class="modal-section-label">The Problem</div>
+        <p>A support team was manually listening to and summarizing 200+ customer calls per day — an 8+ hour/day task split across 3 staff members. Summaries were inconsistent in quality, keywords were missed, and there was no searchable record of call outcomes. The team needed a way to automate call analysis without replacing the human review step entirely.</p>
+      </div>
+
+      <div class="modal-section">
+        <div class="modal-section-label">My Role & Contribution</div>
+        <ul class="modal-list">
+          <li>Designed the end-to-end pipeline: Telephony system → Webhook → PHP ingestion layer → AI API → n8n routing → Database storage</li>
+          <li>Built the PHP webhook receiver that validates incoming call payloads, queues them for processing, and handles retry logic on AI API failures</li>
+          <li>Integrated with an AI transcription + summarization API — extracting call intent, sentiment, key action items, and outcome tags</li>
+          <li>Built n8n automation workflows to route processed call data: escalations to Slack, routine calls to archive, complaints to CRM ticket creation</li>
+          <li>Created a searchable admin dashboard showing call summaries, filterable by date, agent, sentiment, and outcome tag</li>
+        </ul>
+      </div>
+
+      <div class="modal-section">
+        <div class="modal-section-label">Key Technical Decisions</div>
+        <ul class="modal-list">
+          <li>Asynchronous processing via queue — webhook returns 200 immediately; AI processing happens in background, avoiding telephony system timeouts</li>
+          <li>Retry with exponential backoff on AI API calls — handles transient failures without losing call records</li>
+          <li>n8n chosen over custom routing logic — allows non-developers (team leads) to modify routing rules without code deployments</li>
+          <li>Stored raw transcripts alongside AI summaries — allowing re-processing with improved models without re-ingesting call audio</li>
+        </ul>
+      </div>
+
+      <div class="modal-section">
+        <div class="modal-section-label">Outcome & Impact</div>
+        <div class="modal-outcome-grid">
+          <div class="modal-outcome-card"><span class="modal-outcome-val">70%</span><div class="modal-outcome-lbl">Reduction in manual review time</div></div>
+          <div class="modal-outcome-card"><span class="modal-outcome-val">200+</span><div class="modal-outcome-lbl">Calls processed automatically/day</div></div>
+          <div class="modal-outcome-card"><span class="modal-outcome-val">3→1</span><div class="modal-outcome-lbl">Staff needed for call review</div></div>
+          <div class="modal-outcome-card"><span class="modal-outcome-val">100%</span><div class="modal-outcome-lbl">Searchable call record coverage</div></div>
+        </div>
+      </div>
+
+      <div class="modal-section">
+        <div class="modal-section-label">Tech Stack</div>
+        <div class="modal-tech-row">
+          <span class="modal-tech-tag">PHP</span>
+          <span class="modal-tech-tag">AI Transcription API</span>
+          <span class="modal-tech-tag">n8n Automation</span>
+          <span class="modal-tech-tag">Webhooks</span>
+          <span class="modal-tech-tag">MySQL</span>
+          <span class="modal-tech-tag">Queue / Retry Logic</span>
+          <span class="modal-tech-tag">Slack Integration</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal: Security Optimization -->
+<div class="modal-overlay" id="modal-security" role="dialog" aria-modal="true" aria-label="Security Optimization details">
+  <div class="modal">
+    <div class="modal-top">
+      <div class="modal-top-dot" style="background:#ff5f57"></div>
+      <div class="modal-top-dot" style="background:#ffbd2e"></div>
+      <div class="modal-top-dot" style="background:#28c840"></div>
+      <button class="modal-close" onclick="closeModal('modal-security')" aria-label="Close">✕</button>
+    </div>
+    <div class="modal-banner" style="background:linear-gradient(135deg,#1a0f0f,#2a1515);">
+      🔐
+      <div class="modal-banner-overlay"></div>
+    </div>
+    <div class="modal-body">
+      <div class="modal-meta">
+        <span class="tag" style="background:rgba(239,68,68,0.1);border-color:rgba(239,68,68,0.3);color:#f87171;">Security Critical</span>
+        <span class="tag" style="background:rgba(34,197,94,0.1);border-color:rgba(34,197,94,0.3);color:#4ade80;">Resolved</span>
+      </div>
+      <div class="modal-title">AI Security Optimization Project</div>
+      <div class="modal-subtitle">Application Security Hardening · PHP + Security Tooling</div>
+
+      <div class="modal-section">
+        <div class="modal-section-label">The Problem</div>
+        <p>A PHP web application was flagged with active security exploits in production — SSRF vulnerabilities being used to probe internal services, malware injected into uploaded file handlers, API keys hardcoded in source files (committed to a shared repository), and multiple XSS vectors in user-facing input fields. The client needed immediate remediation with zero downtime.</p>
+      </div>
+
+      <div class="modal-section">
+        <div class="modal-section-label">My Role & Contribution</div>
+        <ul class="modal-list">
+          <li>Conducted a full codebase security audit — manually reviewed every user-input point, HTTP client call, and file-handling routine</li>
+          <li>Patched SSRF vulnerabilities by implementing a strict URL allowlist for all outbound HTTP requests — blocking internal IP ranges and private subnets</li>
+          <li>Removed and rotated all hardcoded API keys; migrated secrets to environment variables with documented key rotation policy</li>
+          <li>Eliminated malware payloads injected into file upload handlers; added server-side MIME validation, extension whitelisting, and virus scan integration</li>
+          <li>Applied output encoding (htmlspecialchars) consistently across all user-data render points to close XSS vectors</li>
+          <li>Added Content Security Policy (CSP) headers and validated all form inputs server-side against strict type and length rules</li>
+        </ul>
+      </div>
+
+      <div class="modal-section">
+        <div class="modal-section-label">Key Technical Decisions</div>
+        <ul class="modal-list">
+          <li>Used a URL allowlist (not blocklist) for SSRF prevention — blocklists can be bypassed via DNS rebinding; allowlists cannot</li>
+          <li>Secrets moved to <code style="color:var(--accent-bright);font-family:var(--font-mono);font-size:0.85em">.env</code> with a <code style="color:var(--accent-bright);font-family:var(--font-mono);font-size:0.85em">.gitignore</code> guard and a pre-commit hook that fails if API key patterns are detected in staged files</li>
+          <li>Server-side MIME validation over client-side only — client content-type headers are trivially spoofed</li>
+          <li>CSP headers set to <code style="color:var(--accent-bright);font-family:var(--font-mono);font-size:0.85em">report-only</code> first to collect violation data, then enforced after confirming no false positives</li>
+        </ul>
+      </div>
+
+      <div class="modal-section">
+        <div class="modal-section-label">Outcome & Impact</div>
+        <div class="modal-outcome-grid">
+          <div class="modal-outcome-card"><span class="modal-outcome-val">0</span><div class="modal-outcome-lbl">Security incidents post-remediation</div></div>
+          <div class="modal-outcome-card"><span class="modal-outcome-val">100%</span><div class="modal-outcome-lbl">XSS vectors closed</div></div>
+          <div class="modal-outcome-card"><span class="modal-outcome-val">✓</span><div class="modal-outcome-lbl">Passed follow-up security audit</div></div>
+          <div class="modal-outcome-card"><span class="modal-outcome-val">0</span><div class="modal-outcome-lbl">Downtime during remediation</div></div>
+        </div>
+      </div>
+
+      <div class="modal-section">
+        <div class="modal-section-label">Tech Stack</div>
+        <div class="modal-tech-row">
+          <span class="modal-tech-tag">PHP</span>
+          <span class="modal-tech-tag">SSRF Mitigation</span>
+          <span class="modal-tech-tag">XSS Prevention</span>
+          <span class="modal-tech-tag">CSP Headers</span>
+          <span class="modal-tech-tag">MIME Validation</span>
+          <span class="modal-tech-tag">Secrets Management</span>
+          <span class="modal-tech-tag">Pre-commit Hooks</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
 <!-- Back to Top -->
 <button class="back-top" id="backTop" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Back to top">↑</button>
 
@@ -1951,6 +2432,34 @@ function downloadResume(e) {
   document.body.removeChild(a);
   showToast('📄  Downloading resume...');
 }
+
+// ── Project Modals ──────────────────────────────────────
+function openModal(id) {
+  const overlay = document.getElementById(id);
+  if (!overlay) return;
+  overlay.classList.add('open');
+  document.body.style.overflow = 'hidden';
+  overlay.querySelector('.modal').scrollTop = 0;
+  overlay.addEventListener('click', function outsideClick(e) {
+    if (e.target === overlay) {
+      closeModal(id);
+      overlay.removeEventListener('click', outsideClick);
+    }
+  });
+}
+function closeModal(id) {
+  const overlay = document.getElementById(id);
+  if (!overlay) return;
+  overlay.classList.remove('open');
+  document.body.style.overflow = '';
+}
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') {
+    document.querySelectorAll('.modal-overlay.open').forEach(el => {
+      closeModal(el.id);
+    });
+  }
+});
 
 // ── Smooth active nav highlight ─────────────────────────
 const sections = document.querySelectorAll('section[id]');
